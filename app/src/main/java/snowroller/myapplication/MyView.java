@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -23,16 +24,24 @@ public class MyView extends View implements View.OnTouchListener {
     private Point apple;
     private Random random;
     private LinkedList<Point> snake = new LinkedList<>();
-    private static int WIDTH = 1080;
-    private static int HEIGHT = 1920;
-    int nextx = WIDTH/80;
-    int nexty = HEIGHT/80;
+    private int width;
+    private int height;
+    int nextx;
+    int nexty;
     int vx = 1;
     int vy = 0;
     int length = 5;
 
     public MyView(Context context) {
         super(context);
+
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        width=dm.widthPixels;
+        height=dm.heightPixels;
+
+        nextx = width/80;
+        nexty = height/80;
+
          snakePaint= new Paint();
          snakePaint.setColor(Color.GREEN);
          applePaint = new Paint();
@@ -48,7 +57,7 @@ public class MyView extends View implements View.OnTouchListener {
          snake.add(new Point(nextx,nexty));
 
          random = new Random();
-         apple = new Point(random.nextInt(WIDTH/40),random.nextInt(HEIGHT/40));
+         apple = new Point(random.nextInt(width/40),random.nextInt(height/40));
 
          this.setOnTouchListener(this);
     }
@@ -79,16 +88,16 @@ public class MyView extends View implements View.OnTouchListener {
         snake.add(newpoint);
 
         if (nextx < 0)
-            nextx = WIDTH / 40;
+            nextx = width / 40;
         if (nexty < 0)
-            nexty = HEIGHT / 40;
-        if (nextx > WIDTH / 40)
+            nexty = height / 40;
+        if (nextx > width / 40)
             nextx = 0;
-        if (nexty > HEIGHT / 40)
+        if (nexty > height / 40)
             nexty = 0;
 
         if (apple.x == newpoint.x && apple.y == newpoint.y){
-            apple = new Point(random.nextInt(WIDTH / 40), random.nextInt(HEIGHT / 40));
+            apple = new Point(random.nextInt(width / 40), random.nextInt(height / 40));
             length++;
         }
         else
