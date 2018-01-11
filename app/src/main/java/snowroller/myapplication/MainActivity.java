@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("Text", text);
 
         startActivity(intent);
+        finish();
+        Log.d("","");
     }
 
     @Override
