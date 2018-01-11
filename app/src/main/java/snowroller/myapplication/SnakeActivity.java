@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 public class SnakeActivity extends AppCompatActivity {
 
@@ -47,8 +48,10 @@ public class SnakeActivity extends AppCompatActivity {
         }
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         String snake = sharedPref.getString(SNAKE,"");
-        //Todo: Update MyViews snakelist with data from snake string. If snake is empty, randomize new snake.
-        //Todo: Load apple positon and update MyViews with that.
+        myView.setSnake(snake);
+        Point apple = new Point(sharedPref.getInt("AppleX",10),
+                sharedPref.getInt("AppleY",10));
+        myView.setApple(apple);
     }
 
     @Override
@@ -67,17 +70,19 @@ public class SnakeActivity extends AppCompatActivity {
 
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        String snake = "";
-        //Todo: Convert snake (MyView) to string. Override toString. (x,y,x2,y2....
+        String snake = myView.toString();
+        Log.d("snowroller", snake);
         editor.putString(SNAKE, snake);
-        //Todo: Store also the apple position
+        editor.putInt("AppleX",myView.getApple().x);
+        editor.putInt("AppleY",myView.getApple().y);
         editor.apply();
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        myView.setActive(hasFocus);
+        if( !hasFocus )
+            myView.setActive(hasFocus);
     }
 
     @Override

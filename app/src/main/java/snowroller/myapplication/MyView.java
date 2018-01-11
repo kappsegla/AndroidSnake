@@ -21,6 +21,10 @@ public class MyView extends View implements View.OnTouchListener {
     private Paint applePaint;
     private Paint textPaint;
 
+    public Point getApple() {
+        return apple;
+    }
+
     private Point apple;
     private Random random;
     private LinkedList<Point> snake = new LinkedList<>();
@@ -30,7 +34,7 @@ public class MyView extends View implements View.OnTouchListener {
     int nexty;
     int vx = 1;
     int vy = 0;
-    int length = 5;
+    int length;
 
     public void setActive(boolean active) {
         if( this.active != active) {
@@ -65,6 +69,8 @@ public class MyView extends View implements View.OnTouchListener {
          snake.add(new Point(nextx++,nexty));
          snake.add(new Point(nextx++,nexty));
          snake.add(new Point(nextx,nexty));
+
+         length = 5;
 
          random = new Random();
          apple = new Point(random.nextInt(width/40),random.nextInt(height/40));
@@ -110,18 +116,33 @@ public class MyView extends View implements View.OnTouchListener {
 
         if (apple.x == newpoint.x && apple.y == newpoint.y){
             apple = new Point(random.nextInt(width / 40), random.nextInt(height / 40));
-            length++;
         }
         else
             snake.pollFirst();
+
+        //If we eat ourself, cut snake at intersection point
+        Point head = snake.getLast();
+        for( int i = snake.size()-4; i > 0; i--) {
+            //Can never reach the closest segments.. start at 4th segment behind the head
+            Point body = snake.get(i);
+            if( head.x == body.x && head.y == body.y)
+            {
+                //sublist(from, to) Updates the original list. To is exclusive, from inclusive.
+                snake.subList(0, i+1).clear();
+                break;
+            }
+        }
+
+        length = snake.size();
     }
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if(!active) {
-            active = true;
-            invalidate();
+        //Restart if touched and we are paused
+        if( !active ) {
+            setActive(true);
             return true;
         }
+
         if( event.getAction() == MotionEvent.ACTION_DOWN )
         {
             if( vy == 0 )
@@ -144,6 +165,51 @@ public class MyView extends View implements View.OnTouchListener {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Point p : snake) {
+            sb.append(p.x).append(',').append(p.y).append(',');
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
+    }
+
+    public void setSnake(String snakeData) {
+        if (snakeData == null || snakeData.isEmpty())
+            return;
+
+        String[] arr = snakeData.split(",");
+        snake.clear();
+
+        for (int i = 0; i < arr.length; ) {
+            int x = Integer.parseInt(arr[i++]);
+            int y = Integer.parseInt(arr[i++]);
+            snake.add(new Point(x, y));
+        }
+        Point head = snake.getLast();
+        Point headminusone = snake.get(snake.size() - 2);
+
+        length = snake.size();
+
+        nextx = head.x;
+        nexty = head.y;
+
+        vx = head.x - headminusone.x;
+        vy = head.y - headminusone.y;
+
+        if (vx < -1 || vx > 1 || vy < -1 || vy > 1) {
+            //Todo: Convert to intervall -1,0,1 rare error when head is on one side of screen and headminusone on the other side
+        }
+
+        //Don't start yet
+        setActive(false);
+    }
+
+    public void setApple(Point apple) {
+        this.apple = apple;
     }
 }
 
