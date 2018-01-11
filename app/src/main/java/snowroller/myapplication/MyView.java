@@ -32,6 +32,16 @@ public class MyView extends View implements View.OnTouchListener {
     int vy = 0;
     int length = 5;
 
+    public void setActive(boolean active) {
+        if( this.active != active) {
+            this.active = active;
+            if (active)
+                invalidate();
+        }
+    }
+
+    private boolean active;
+
     public MyView(Context context) {
         super(context);
 
@@ -67,7 +77,8 @@ public class MyView extends View implements View.OnTouchListener {
         int h = canvas.getHeight();
         int w = canvas.getWidth();
 
-        updateSnake();
+        if( active )
+            updateSnake();
 
         for ( Point p: snake ) {
             canvas.drawCircle(p.x * 40, p.y * 40, 20.0f, snakePaint);
@@ -77,7 +88,8 @@ public class MyView extends View implements View.OnTouchListener {
 
         canvas.drawText("Segments: " + length, 40.0f,40.0f,textPaint );
 
-        postDelayed(()->this.invalidate(),250);
+        if( active )
+            postDelayed(()->this.invalidate(),250);
     }
 
     private void updateSnake() {
@@ -105,6 +117,11 @@ public class MyView extends View implements View.OnTouchListener {
     }
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if(!active) {
+            active = true;
+            invalidate();
+            return true;
+        }
         if( event.getAction() == MotionEvent.ACTION_DOWN )
         {
             if( vy == 0 )
