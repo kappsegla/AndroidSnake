@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,12 +59,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonClicked(View v){
+
         Log.d("Snowroller", "buttonClicked called!");
         Intent intent = new Intent(this, MainActivity.class);
 
         //Extract editText text
-        EditText editText = findViewById(R.id.editText);
-        String text = editText.getText().toString();
+      //  EditText editText = findViewById(R.id.editText);
+      //  String text = editText.getText().toString();
 
 //        Uri webpage = Uri.parse(text);
 //        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
@@ -89,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 //        //Add string to intent
-        intent.putExtra("Text", text);
+//        intent.putExtra("Text", text);
 
-        startActivity(intent);
-        finish();
+//      startActivity(intent);
+//        finish();
         Log.d("","");
     }
 
