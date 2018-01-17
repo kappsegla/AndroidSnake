@@ -3,7 +3,7 @@ package snowroller.myapplication.viewmodels;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingConversion;
-import android.databinding.ObservableField;
+import android.databinding.ObservableArrayList;
 import android.view.View;
 
 import snowroller.myapplication.BR;
@@ -17,11 +17,72 @@ public class Activity2ViewModel extends BaseObservable {
     private boolean checked;
     private int progress;
 
-    public final ObservableField<String> firstName =
-            new ObservableField<>();
+    private String firstName;
+    private String lastName;
+    private int selectedDayPosition;
 
-    public final ObservableField<String> lastName =
-            new ObservableField<>();
+    public final ObservableArrayList<Object> days = new ObservableArrayList<>();
+
+    public Activity2ViewModel() {
+        days.add("Monday");
+        days.add("Tuesday");
+        days.add("Wednesday");
+        days.add("Thursday");
+        days.add("Friday");
+        days.add("Saturday");
+        days.add("Sunday");
+    }
+    @Bindable
+    public int getSelectedDayPosition()
+    {
+        return selectedDayPosition;
+    }
+
+    public void setSelectedDayPosition(int dayPosition)
+    {
+        selectedDayPosition = dayPosition;
+        notifyPropertyChanged(BR.selectedDayPosition);
+    }
+
+    @Bindable
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+        notifyPropertyChanged(BR.firstName);
+        notifyPropertyChanged(BR.firstNameError);
+    }
+
+    @Bindable
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+        notifyPropertyChanged(BR.lastName);
+        notifyPropertyChanged(BR.lastNameError);
+    }
+
+    @Bindable
+    public String getFirstNameError()
+    {
+        if( firstName != null && firstName.length() < 2)
+            return("Too short");
+        else
+            return null;
+    }
+
+    @Bindable
+    public String getLastNameError()
+    {
+        if( lastName != null && lastName.length() < 3)
+            return("Too short");
+        else
+            return null;
+    }
 
     @Bindable
     public int getProgress() {
@@ -44,7 +105,6 @@ public class Activity2ViewModel extends BaseObservable {
 
     public void setName(String name) {
         this.name = name;
-        firstName.set(name);
         notifyPropertyChanged(BR.name);
     }
 
@@ -64,5 +124,16 @@ public class Activity2ViewModel extends BaseObservable {
             return View.VISIBLE;
         else
             return View.INVISIBLE;
+    }
+
+    public boolean longButtonClicked(View v)
+    {
+        setFirstName("Kalle");
+        return true;
+    }
+
+    public void buttonClicked(View v)
+    {
+        setChecked(!isChecked());
     }
 }
