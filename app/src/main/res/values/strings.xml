@@ -7,4 +7,19 @@
     <string name="last_name">Last name:</string>
     <string name="button">Button</string>
     <string name="i_will_hide_something">I will hide something</string>
+    <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="next_button">Next</string>
+    <plurals name="days_count">
+        <item quantity="one">%d dag.</item>
+        <item quantity="other">%d dagar.</item>
+    </plurals>
+    <string-array name="days">
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+    </string-array>
 </resources>

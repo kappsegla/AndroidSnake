@@ -3,4 +3,8 @@
     <string name="app_name">Min Applikation</string>
     <string name="action_settings">Inställningar</string>
     <string name="hello_world">Hej Världen!</string>
+    <string name="tuesday">Tisdag</string>
+    <string name="monday">Måndag</string>
+    <string name="next_button">Nästa</string>
+    <string name="title_home">Hem</string>
 </resources>

@@ -6,6 +6,8 @@ import android.databinding.BindingConversion;
 import android.databinding.ObservableArrayList;
 import android.view.View;
 
+import java.util.Arrays;
+
 import snowroller.myapplication.BR;
 
 /**
@@ -20,18 +22,21 @@ public class Activity2ViewModel extends BaseObservable {
     private String firstName;
     private String lastName;
     private int selectedDayPosition;
+    private int daycount = 1;
 
-    public final ObservableArrayList<Object> days = new ObservableArrayList<>();
+    public final ObservableArrayList<String> days = new ObservableArrayList<>();
 
-    public Activity2ViewModel() {
-        days.add("Monday");
-        days.add("Tuesday");
-        days.add("Wednesday");
-        days.add("Thursday");
-        days.add("Friday");
-        days.add("Saturday");
-        days.add("Sunday");
+    public Activity2ViewModel(String[] days) {
+        this.days.addAll(Arrays.asList(days));
     }
+
+    @Bindable
+    public int getDayCount()
+    {
+        return daycount;
+    }
+
+
     @Bindable
     public int getSelectedDayPosition()
     {
@@ -132,8 +137,8 @@ public class Activity2ViewModel extends BaseObservable {
         return true;
     }
 
-    public void buttonClicked(View v)
-    {
-        setChecked(!isChecked());
+    public void buttonClicked(View v) {
+        daycount++;
+        notifyPropertyChanged(BR.dayCount);
     }
 }
