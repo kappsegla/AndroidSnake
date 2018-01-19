@@ -6,15 +6,21 @@ import android.databinding.BindingConversion;
 import android.databinding.ObservableArrayList;
 import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Arrays;
 
 import snowroller.myapplication.BR;
+import snowroller.myapplication.BottomNavigationActivity;
+import snowroller.myapplication.events.ShowToastEvent;
+import snowroller.myapplication.events.StartActivityEvent;
 
 /**
  * Created by Martin on 2018-01-17.
  */
 
 public class Activity2ViewModel extends BaseObservable {
+    private final EventBus bus;
     private String name;
     private boolean checked;
     private int progress;
@@ -26,7 +32,9 @@ public class Activity2ViewModel extends BaseObservable {
 
     public final ObservableArrayList<String> days = new ObservableArrayList<>();
 
-    public Activity2ViewModel(String[] days) {
+    public Activity2ViewModel(EventBus bus, String[] days) {
+
+        this.bus = bus;
         this.days.addAll(Arrays.asList(days));
     }
 
@@ -140,5 +148,27 @@ public class Activity2ViewModel extends BaseObservable {
     public void buttonClicked(View v) {
         daycount++;
         notifyPropertyChanged(BR.dayCount);
+        bus.post(new ShowToastEvent("Number of days increased"));
+    }
+
+    private boolean clickable = true;
+
+    @Bindable
+    public boolean isClickable() {
+        return clickable;
+    }
+
+    public void setClickable(boolean clickable) {
+        this.clickable = clickable;
+        notifyPropertyChanged(BR.clickable);
+    }
+
+    public void nextButton(View v)
+    {
+        if( isClickable() ) {
+            setClickable(false);
+            bus.post(new StartActivityEvent(BottomNavigationActivity.class));
+            //setClickable(true);
+        }
     }
 }
