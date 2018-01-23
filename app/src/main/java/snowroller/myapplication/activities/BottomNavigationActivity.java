@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import java.util.Stack;
@@ -25,13 +27,13 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            if( fragmentBackStack.peek() == item.getItemId())
+            if (fragmentBackStack.peek() == item.getItemId())
                 return true;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     Fragment today = new TodayFragment();
                     getFragmentManager().beginTransaction()
-                            .replace(R.id.frameLayout, today,"TODAY").commit();
+                            .replace(R.id.frameLayout, today, "TODAY").commit();
                     fragmentBackStack.push(R.id.navigation_home);
                     return true;
                 case R.id.navigation_dashboard:
@@ -52,7 +54,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_bottom_navigation);
-        ActivityBottomNavigationBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_bottom_navigation );
+        ActivityBottomNavigationBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_bottom_navigation);
         binding.setViewModel(new BottomNavigationViewModel());
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -62,16 +64,34 @@ public class BottomNavigationActivity extends AppCompatActivity {
         getFragmentManager().beginTransaction()
                 .add(R.id.frameLayout, todayFragment, "TODAY").commit();
         fragmentBackStack.push(R.id.navigation_home);
+
+        setSupportActionBar(findViewById(R.id.toolbar2));
     }
 
     @Override
     public void onBackPressed() {
         fragmentBackStack.pop();
-        if( !fragmentBackStack.empty() )
-        {
-            navigation.setSelectedItemId( fragmentBackStack.pop() );
-        }
-        else
+        if (!fragmentBackStack.empty()) {
+            navigation.setSelectedItemId(fragmentBackStack.pop());
+        } else
             super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_android:
+                //Do something here
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
