@@ -1,4 +1,4 @@
-package snowroller.myapplication;
+package snowroller.myapplication.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import snowroller.myapplication.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -11,7 +11,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Arrays;
 
 import snowroller.myapplication.BR;
-import snowroller.myapplication.BottomNavigationActivity;
+import snowroller.myapplication.activities.BottomNavigationActivity;
 import snowroller.myapplication.events.ShowToastEvent;
 import snowroller.myapplication.events.StartActivityEvent;
 

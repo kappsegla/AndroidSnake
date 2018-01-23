@@ -213,12 +213,3 @@ public class MyView extends View implements View.OnTouchListener {
     }
 }
 
-class Point
-{
-    int x,y;
-    public Point(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-}

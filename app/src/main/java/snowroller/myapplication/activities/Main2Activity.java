@@ -1,4 +1,4 @@
-package snowroller.myapplication;
+package snowroller.myapplication.activities;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -10,6 +10,7 @@ import android.widget.Toast;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import snowroller.myapplication.R;
 import snowroller.myapplication.databinding.ActivityMain2Binding;
 import snowroller.myapplication.events.ShowToastEvent;
 import snowroller.myapplication.events.StartActivityEvent;

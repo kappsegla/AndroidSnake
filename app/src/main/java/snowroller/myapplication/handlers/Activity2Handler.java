@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import snowroller.myapplication.BottomNavigationActivity;
+import snowroller.myapplication.activities.BottomNavigationActivity;
 
 /**
  * Created by Martin on 2018-01-19.
