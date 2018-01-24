@@ -18,6 +18,7 @@ import java.util.Stack;
 import snowroller.myapplication.R;
 import snowroller.myapplication.databinding.ActivityBottomNavigationBinding;
 import snowroller.myapplication.fragments.TodayFragment;
+import snowroller.myapplication.fragments.TotalFragment;
 import snowroller.myapplication.fragments.WeekFragment;
 import snowroller.myapplication.viewmodels.BottomNavigationViewModel;
 
@@ -46,7 +47,10 @@ public class BottomNavigationActivity extends AppCompatActivity {
                     fragmentBackStack.push(R.id.navigation_dashboard);
                     return true;
                 case R.id.navigation_notifications:
-
+                    Fragment total = new TotalFragment();
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.frameLayout, total, "TOTAL").commit();
+                    fragmentBackStack.push(R.id.navigation_notifications);
                     return true;
             }
             return false;

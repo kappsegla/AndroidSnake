@@ -31,4 +31,8 @@
     <string name="channel_name">Default channel</string>
     <string name="channel_description">Default channel for normal notifications sent from the application.</string>
     <string name="supermario">Mario</string>
+    <string name="get_summary">Get summary:</string>
+    <string name="drop_height">Drop height:</string>
+    <string name="lift_rides">Lift rides:</string>
+    <string name="how_many_friends">How many friends?</string>
 </resources>
