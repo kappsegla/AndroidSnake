@@ -8,6 +8,8 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import snowroller.myapplication.R;
+import snowroller.myapplication.fragments.TodayFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -119,4 +122,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

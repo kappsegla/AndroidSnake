@@ -5,10 +5,13 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.Stack;
 
@@ -93,5 +96,15 @@ public class BottomNavigationActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    public void notifyButton(View view) {
+
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this, TodayFragment.id)
+                        .setSmallIcon(R.drawable.ic_small_notification_pet_icon)
+                        .setContentTitle("This is title")
+                        .setContentText("This is some text");
+
+        NotificationManagerCompat.from(this).notify(1, builder.build() );
     }
 }
