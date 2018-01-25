@@ -1,6 +1,7 @@
 package snowroller.myapplication.activities;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,24 +37,24 @@ public class BottomNavigationActivity extends AppCompatActivity {
             if (fragmentBackStack.peek() == item.getItemId())
                 return true;
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_today:
                     Fragment today = new TodayFragment();
                     getFragmentManager().beginTransaction()
                             .replace(R.id.frameLayout, today, "TODAY").commit();
-                    fragmentBackStack.push(R.id.navigation_home);
+                    fragmentBackStack.push(R.id.navigation_today);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_week:
                     Fragment week = new WeekFragment();
                     getFragmentManager().beginTransaction()
                             .replace(R.id.frameLayout, week, "WEEK").commit();
-                    fragmentBackStack.push(R.id.navigation_dashboard);
+                    fragmentBackStack.push(R.id.navigation_week);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_season:
                     Fragment total = new TotalFragment();
                     getFragmentManager().beginTransaction()
                             .setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left)
                             .replace(R.id.frameLayout, total, "TOTAL").commit();
-                    fragmentBackStack.push(R.id.navigation_notifications);
+                    fragmentBackStack.push(R.id.navigation_season);
                     return true;
             }
             return false;
@@ -73,7 +74,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
         Fragment todayFragment = new TodayFragment();
         getFragmentManager().beginTransaction()
                 .add(R.id.frameLayout, todayFragment, "TODAY").commit();
-        fragmentBackStack.push(R.id.navigation_home);
+        fragmentBackStack.push(R.id.navigation_today);
 
         setSupportActionBar(findViewById(R.id.toolbar2));
     }
@@ -97,8 +98,10 @@ public class BottomNavigationActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_android:
+            case R.id.action_playsnake:
                 //Do something here
+                Intent intent = new Intent(this, SnakeActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

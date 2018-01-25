@@ -8,9 +8,9 @@
     <string name="button">Button.....     XXX</string>
     <string name="i_will_hide_something">I will hide something</string>
     <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_today">Today</string>
+    <string name="title_week">Week</string>
+    <string name="title_season">Season</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="next_button">Next</string>
@@ -35,4 +35,5 @@
     <string name="drop_height">Drop height:</string>
     <string name="lift_rides">Lift rides:</string>
     <string name="how_many_friends">How many friends?</string>
+    <string name="action_playsnake">Snake</string>
 </resources>
