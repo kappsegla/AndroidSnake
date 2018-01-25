@@ -1,5 +1,6 @@
 package snowroller.myapplication.activities;
 
+import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +9,6 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -19,7 +18,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import snowroller.myapplication.R;
-import snowroller.myapplication.fragments.TodayFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("Snowroller", "buttonClicked called!");
         Intent intent = new Intent(this, MainActivity.class);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(this, R.animator.enter_from_right, R.animator.exit_to_left);
+        startActivity(intent, options.toBundle());
 
         //Extract editText text
       //  EditText editText = findViewById(R.id.editText);

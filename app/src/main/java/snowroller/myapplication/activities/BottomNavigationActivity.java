@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import java.util.Stack;
 
@@ -49,6 +51,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 case R.id.navigation_notifications:
                     Fragment total = new TotalFragment();
                     getFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left)
                             .replace(R.id.frameLayout, total, "TOTAL").commit();
                     fragmentBackStack.push(R.id.navigation_notifications);
                     return true;
@@ -102,6 +105,17 @@ public class BottomNavigationActivity extends AppCompatActivity {
         }
     }
     public void notifyButton(View view) {
+
+        //Property Animation, will actually change the property value of the target object
+        /*AnimatorSet animSet =
+                (AnimatorSet) AnimatorInflater.loadAnimator(view.getContext(), R.animator.icon_expand);
+        animSet.setTarget(view);
+        animSet.start();
+        */
+        //View Animation, only animates the graphical view of the object
+        //Actual properties are not affected
+        Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.icon_animation);
+        view.startAnimation(animation);
 
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this, TodayFragment.id)
