@@ -1,8 +1,13 @@
 package snowroller.myapplication.services;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Query;
+import snowroller.myapplication.models.Latest;
+import snowroller.myapplication.models.LiftRide;
 import snowroller.myapplication.models.SkistarSummary;
 
 /**
@@ -15,6 +20,10 @@ public interface SkistarAPIService {
     Call<SkistarSummary> summary(@Header("DisplayedEntityId") String skierId);
     @GET("friend/count")
     Call<Integer> friendCount(@Header("DisplayedEntityId") String skierId);
+    @GET("statistic/latest")
+    Call<Latest> latestStatistics(@Header("DisplayedEntityId") String skierId);
+    @GET("statistic/rides")
+    Call<List<LiftRide>> liftRides(@Header("DisplayedEntityId") String skierId, @Query("seasonId") String seasonId);
 }
 /*
 https://www.skistar.com/myskistar/game/api/v3/statistic/rides?seasonId=13

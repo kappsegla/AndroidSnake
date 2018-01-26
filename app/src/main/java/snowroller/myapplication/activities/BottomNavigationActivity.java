@@ -6,15 +6,10 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import java.util.Stack;
 
@@ -28,29 +23,33 @@ import snowroller.myapplication.viewmodels.BottomNavigationViewModel;
 public class BottomNavigationActivity extends AppCompatActivity {
 
     private BottomNavigationView navigation;
+    private BottomNavigationViewModel viewModel;
     private Stack<Integer> fragmentBackStack = new Stack<>();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            if (fragmentBackStack.peek() == item.getItemId())
+            if (!fragmentBackStack.empty() && fragmentBackStack.peek() == item.getItemId())
                 return true;
             switch (item.getItemId()) {
                 case R.id.navigation_today:
-                    Fragment today = new TodayFragment();
+                    TodayFragment today = new TodayFragment();
+                    viewModel.setFragment(today);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.frameLayout, today, "TODAY").commit();
                     fragmentBackStack.push(R.id.navigation_today);
                     return true;
                 case R.id.navigation_week:
                     Fragment week = new WeekFragment();
+                    viewModel.setFragment(null);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.frameLayout, week, "WEEK").commit();
                     fragmentBackStack.push(R.id.navigation_week);
                     return true;
                 case R.id.navigation_season:
                     Fragment total = new TotalFragment();
+                    viewModel.setFragment(null);
                     getFragmentManager().beginTransaction()
                             .setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left)
                             .replace(R.id.frameLayout, total, "TOTAL").commit();
@@ -66,15 +65,17 @@ public class BottomNavigationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_bottom_navigation);
         ActivityBottomNavigationBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_bottom_navigation);
-        binding.setViewModel(new BottomNavigationViewModel());
+        viewModel = new BottomNavigationViewModel();
+        binding.setViewModel(viewModel);
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        Fragment todayFragment = new TodayFragment();
+        TodayFragment todayFragment = new TodayFragment();
+        viewModel.setFragment(todayFragment);
+        fragmentBackStack.push(R.id.navigation_today);
         getFragmentManager().beginTransaction()
                 .add(R.id.frameLayout, todayFragment, "TODAY").commit();
-        fragmentBackStack.push(R.id.navigation_today);
 
         setSupportActionBar(findViewById(R.id.toolbar2));
     }
@@ -106,26 +107,5 @@ public class BottomNavigationActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-    public void notifyButton(View view) {
-
-        //Property Animation, will actually change the property value of the target object
-        /*AnimatorSet animSet =
-                (AnimatorSet) AnimatorInflater.loadAnimator(view.getContext(), R.animator.icon_expand);
-        animSet.setTarget(view);
-        animSet.start();
-        */
-        //View Animation, only animates the graphical view of the object
-        //Actual properties are not affected
-        Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.icon_animation);
-        view.startAnimation(animation);
-
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(this, TodayFragment.id)
-                        .setSmallIcon(R.drawable.ic_small_notification_pet_icon)
-                        .setContentTitle("This is title")
-                        .setContentText("This is some text");
-
-        NotificationManagerCompat.from(this).notify(1, builder.build() );
     }
 }

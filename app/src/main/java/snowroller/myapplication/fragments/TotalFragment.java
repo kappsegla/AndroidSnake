@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import snowroller.myapplication.R;
 import snowroller.myapplication.databinding.FragmentTotalBinding;
-import snowroller.myapplication.viewmodels.TotalFragmentViewModel;
+import snowroller.myapplication.viewmodels.TotalViewModel;
 
 
 /**
@@ -28,7 +28,7 @@ public class TotalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        TotalFragmentViewModel viewModel = new TotalFragmentViewModel();
+        TotalViewModel viewModel = new TotalViewModel();
 
         FragmentTotalBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_total,
                 container, false);

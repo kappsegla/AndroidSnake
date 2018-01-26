@@ -3,12 +3,15 @@ package snowroller.myapplication.viewmodels;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import snowroller.myapplication.BR;
+import snowroller.myapplication.models.LiftRide;
 import snowroller.myapplication.models.SkistarSummary;
 import snowroller.myapplication.services.SkistarAPIService;
 
@@ -16,7 +19,7 @@ import snowroller.myapplication.services.SkistarAPIService;
  * Created by Martin on 2018-01-24.
  */
 
-public class TotalFragmentViewModel extends BaseObservable implements Callback<SkistarSummary> {
+public class TotalViewModel extends BaseObservable implements Callback<SkistarSummary> {
 
     private SkistarSummary summary;
     private String friendCount;
@@ -53,14 +56,14 @@ public class TotalFragmentViewModel extends BaseObservable implements Callback<S
 
     public void updateFriendCount()
     {
-      getService().friendCount("3206").enqueue(new Callback<Integer>() {
+      getService().liftRides("3206","13").enqueue(new Callback<List<LiftRide>>() {
           @Override
-          public void onResponse(Call<Integer> call, Response<Integer> response) {
-              setFriendCount(response.body().toString());
+          public void onResponse(Call<List<LiftRide>> call, Response<List<LiftRide>> response) {
+                List<LiftRide> liftRides = response.body();
           }
 
           @Override
-          public void onFailure(Call<Integer> call, Throwable t) {
+          public void onFailure(Call<List<LiftRide>> call, Throwable t) {
 
           }
       });
