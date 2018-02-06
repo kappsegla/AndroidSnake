@@ -9,7 +9,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -117,13 +116,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
         NotificationChannel mChannel = new NotificationChannel(id, name, importance);
 // Configure the notification channel.
         mChannel.setDescription(description);
-        mChannel.enableLights(true);
-// Sets the notification light color for notifications posted to this
-// channel, if the device supports this feature.
-        mChannel.setLightColor(Color.RED);
-        mChannel.enableVibration(true);
-        mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-        notificationManager.createNotificationChannel(mChannel);
+         notificationManager.createNotificationChannel(mChannel);
     }
 
     @Override
