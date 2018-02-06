@@ -1,8 +1,15 @@
 package snowroller.myapplication.activities;
 
 import android.app.Fragment;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,9 +25,12 @@ import snowroller.myapplication.databinding.ActivityBottomNavigationBinding;
 import snowroller.myapplication.fragments.TodayFragment;
 import snowroller.myapplication.fragments.TotalFragment;
 import snowroller.myapplication.fragments.WeekFragment;
+import snowroller.myapplication.jobs.UpdateSkierStats;
 import snowroller.myapplication.viewmodels.BottomNavigationViewModel;
 
 public class BottomNavigationActivity extends AppCompatActivity {
+
+    public static final String id = "DEFAULT_CHANNEL";
 
     private BottomNavigationView navigation;
     private BottomNavigationViewModel viewModel;
@@ -78,6 +88,42 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 .add(R.id.frameLayout, todayFragment, "TODAY").commit();
 
         setSupportActionBar(findViewById(R.id.toolbar2));
+
+        registerNotificationChannel();
+        schedulePeriodicJob();
+    }
+
+    private void schedulePeriodicJob() {
+        JobScheduler jobScheduler =
+                (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+
+        jobScheduler.schedule(new JobInfo.Builder(1234,
+                new ComponentName(this, UpdateSkierStats.class))
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPeriodic(15 * 60000)
+                .build());
+    }
+
+    private void registerNotificationChannel() {
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+// The user-visible name of the channel.
+        CharSequence name = getString(R.string.channel_name);
+// The user-visible description of the channel.
+        String description = getString(R.string.channel_description);
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel mChannel = new NotificationChannel(id, name, importance);
+// Configure the notification channel.
+        mChannel.setDescription(description);
+        mChannel.enableLights(true);
+// Sets the notification light color for notifications posted to this
+// channel, if the device supports this feature.
+        mChannel.setLightColor(Color.RED);
+        mChannel.enableVibration(true);
+        mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+        notificationManager.createNotificationChannel(mChannel);
     }
 
     @Override

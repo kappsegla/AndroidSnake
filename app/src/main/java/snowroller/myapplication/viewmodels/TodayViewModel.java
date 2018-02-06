@@ -6,11 +6,9 @@ import android.databinding.Bindable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import snowroller.myapplication.BR;
 import snowroller.myapplication.models.Latest;
-import snowroller.myapplication.services.SkistarAPIService;
+import snowroller.myapplication.services.Services;
 
 /**
  * Created by Martin on 2018-01-25.
@@ -61,7 +59,7 @@ public class TodayViewModel extends BaseObservable {
 
     public void refresh()
     {
-        getService().latestStatistics("3206").enqueue(new Callback<Latest>() {
+        Services.getService().latestStatistics("3206").enqueue(new Callback<Latest>() {
             @Override
             public void onResponse(Call<Latest> call, Response<Latest> response) {
                 Latest latest = response.body();
@@ -77,15 +75,5 @@ public class TodayViewModel extends BaseObservable {
             }
         });
 
-    }
-
-    private SkistarAPIService getService()
-    {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.skistar.com/myskistar/game/api/v3/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        return retrofit.create(SkistarAPIService.class);
     }
 }
