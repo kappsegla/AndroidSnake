@@ -40,6 +40,5 @@ public class BottomNavigationViewModel extends BaseObservable{
         notifyPropertyChanged(BR.loading);
     }
 
-
-
+    public TodayViewModel todayViewModel = new TodayViewModel();
 }

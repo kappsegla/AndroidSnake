@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import snowroller.myapplication.R;
 import snowroller.myapplication.databinding.FragmentTodayBinding;
 import snowroller.myapplication.viewmodels.TodayViewModel;
+import snowroller.myapplication.viewmodels.ViewModelProvider;
 
 
 /**
@@ -33,7 +34,7 @@ public class TodayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        viewModel = new TodayViewModel();
+        viewModel = ViewModelProvider.getInstance().getBottomNavigationViewModel().todayViewModel;
 
         FragmentTodayBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_today,
                 container, false);

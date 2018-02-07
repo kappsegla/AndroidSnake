@@ -66,7 +66,6 @@ public class TodayViewModel extends BaseObservable {
                 setDropHeight(latest.getLatestDayStatistics().getDropHeight());
                 setLiftCount(latest.getLatestDayStatistics().getLiftCount());
                 setLiftRides(latest.getLatestDayStatistics().getLiftRides());
-
             }
 
             @Override

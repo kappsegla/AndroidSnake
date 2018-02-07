@@ -26,6 +26,7 @@ import snowroller.myapplication.fragments.TotalFragment;
 import snowroller.myapplication.fragments.WeekFragment;
 import snowroller.myapplication.jobs.UpdateSkierStats;
 import snowroller.myapplication.viewmodels.BottomNavigationViewModel;
+import snowroller.myapplication.viewmodels.ViewModelProvider;
 
 public class BottomNavigationActivity extends AppCompatActivity {
 
@@ -74,7 +75,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_bottom_navigation);
         ActivityBottomNavigationBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_bottom_navigation);
-        viewModel = new BottomNavigationViewModel();
+        viewModel = ViewModelProvider.getInstance().getBottomNavigationViewModel();
         binding.setViewModel(viewModel);
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
