@@ -35,6 +35,8 @@
     <string name="how_many_friends">How many friends?</string>
     <string name="action_playsnake">Snake</string>
     <string name="dropHeight">%d m</string>
+    <string name="preferences_automatic_updates_title">Automatic updates</string>
+    <string name="settings_title">Settings</string>
     <plurals name="liftCount">
         <item quantity="zero">%d lifts</item>
         <item quantity="one">%d lift</item>

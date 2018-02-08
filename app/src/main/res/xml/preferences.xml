@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <snowroller.myapplication.preferences.EditTextPreferenceWithSummary
+        android:defaultValue="3206"
+        android:key="skierid_preference"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="SkierId %s used for API access"
+        android:title="SkierId" />
+    <EditTextPreference
+        android:defaultValue="13"
+        android:key="seasonid_preference"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Api specific season identifier"
+        android:title="Season" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="background_updates_preference"
+        android:title="@string/preferences_automatic_updates_title" />
+    <ListPreference
+        android:defaultValue="30"
+        android:dependency="background_updates_preference"
+        android:entries="@array/frequency"
+        android:entryValues="@array/frequency"
+        android:key="update_frequency_preference"
+        android:summary="%s min"
+        android:title="Update interval" />
+</PreferenceScreen>

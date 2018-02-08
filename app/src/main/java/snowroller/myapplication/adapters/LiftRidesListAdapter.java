@@ -16,13 +16,19 @@ import snowroller.myapplication.models.LiftRide;
  */
 
 class MyViewHolder extends RecyclerView.ViewHolder {
-    public ListItemBinding binding;
+    private ListItemBinding binding;
 
     public MyViewHolder(View itemView) {
         super(itemView);
 
         //Store binder reference for view
         binding = DataBindingUtil.bind(itemView);
+    }
+
+    public void bindViewModel(LiftRide liftRide)
+    {
+        binding.setViewModel(liftRide);
+        binding.executePendingBindings();
     }
 }
 
@@ -48,8 +54,7 @@ public class LiftRidesListAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {
         //Assign viewModel to view
         LiftRide liftRide = liftRides.get(position);
-        holder.binding.setViewModel(liftRide);
-        holder.binding.executePendingBindings();
+        holder.bindViewModel(liftRide);
     }
 
     @Override
@@ -62,5 +67,4 @@ public class LiftRidesListAdapter extends RecyclerView.Adapter<MyViewHolder> {
         this.liftRides = liftRides;
         this.notifyDataSetChanged();
     }
-
 }

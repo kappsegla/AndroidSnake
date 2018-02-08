@@ -1,8 +1,6 @@
 package snowroller.myapplication.activities;
 
 import android.app.Fragment;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
@@ -88,8 +86,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 .add(R.id.frameLayout, todayFragment, "TODAY").commit();
 
         setSupportActionBar(findViewById(R.id.toolbar2));
-
-        registerNotificationChannel();
+        
         schedulePeriodicJob();
     }
 
@@ -102,23 +99,12 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPeriodic(15 * 60000)
                 .build());
+
+        // Call cancel to stop scheduling of job
+        // jobScheduler.cancel(1234);
     }
 
-    private void registerNotificationChannel() {
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-
-// The user-visible name of the channel.
-        CharSequence name = getString(R.string.channel_name);
-// The user-visible description of the channel.
-        String description = getString(R.string.channel_description);
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel mChannel = new NotificationChannel(id, name, importance);
-// Configure the notification channel.
-        mChannel.setDescription(description);
-         notificationManager.createNotificationChannel(mChannel);
-    }
 
     @Override
     public void onBackPressed() {
@@ -143,6 +129,10 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 //Do something here
                 Intent intent = new Intent(this, SnakeActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

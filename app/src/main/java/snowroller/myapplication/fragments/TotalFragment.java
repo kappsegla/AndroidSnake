@@ -21,6 +21,7 @@ import snowroller.myapplication.databinding.FragmentTotalBinding;
 import snowroller.myapplication.models.LiftRide;
 import snowroller.myapplication.services.Services;
 import snowroller.myapplication.viewmodels.TotalViewModel;
+import snowroller.myapplication.viewmodels.ViewModelProvider;
 
 
 /**
@@ -33,12 +34,11 @@ public class TotalFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        TotalViewModel viewModel = new TotalViewModel();
+        TotalViewModel viewModel = ViewModelProvider.getInstance().getBottomNavigationViewModel().totalViewModel;
 
         FragmentTotalBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_total,
                 container, false);
@@ -49,8 +49,8 @@ public class TotalFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         Services.getService().liftRides("3206","13").enqueue(new Callback<List<LiftRide>>() {
             @Override

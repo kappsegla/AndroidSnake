@@ -1,7 +1,10 @@
 package snowroller.myapplication.viewmodels;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.preference.PreferenceManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,9 +60,12 @@ public class TodayViewModel extends BaseObservable {
         return dropHeight/200;
     }
 
-    public void refresh()
+    public void refresh(Context context)
     {
-        Services.getService().latestStatistics("3206").enqueue(new Callback<Latest>() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String skierId = sharedPreferences.getString("skierid_preference","");
+
+        Services.getService().latestStatistics("skierId").enqueue(new Callback<Latest>() {
             @Override
             public void onResponse(Call<Latest> call, Response<Latest> response) {
                 Latest latest = response.body();

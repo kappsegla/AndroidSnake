@@ -1,16 +1,16 @@
 package snowroller.myapplication.jobs;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+import android.content.Context;
 import android.util.Log;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import snowroller.myapplication.R;
-import snowroller.myapplication.activities.BottomNavigationActivity;
 import snowroller.myapplication.models.Latest;
 import snowroller.myapplication.services.Services;
 
@@ -28,13 +28,16 @@ public class UpdateSkierStats extends JobService {
             public void onResponse(Call<Latest> call, Response<Latest> response) {
                 jobFinished(jobParameters,false);
 
-                NotificationCompat.Builder builder =
-                        new NotificationCompat.Builder(UpdateSkierStats.this, BottomNavigationActivity.id)
+                //If running on sdk >= 26 we must create a notification channel
+                //Code for that is in BottomNavigationActivity
+                Notification.Builder builder =
+                        new Notification.Builder(UpdateSkierStats.this, "default")
                                 .setSmallIcon(R.drawable.ic_small_notification_pet_icon)
                                 .setContentTitle("This is title")
                                 .setContentText("This is some text");
 
-                NotificationManagerCompat.from(UpdateSkierStats.this).notify(1, builder.build() );
+                ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE))
+                        .notify( 1, builder.build() );
             }
 
             @Override

@@ -1,5 +1,6 @@
 package snowroller.myapplication.viewmodels;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Handler;
@@ -21,11 +22,10 @@ public class BottomNavigationViewModel extends BaseObservable{
 
     private TodayFragment fragment;
 
-
-    public void onRefresh(){
+    public void onRefresh(Context context){
 
         if( fragment != null)
-            fragment.refresh();
+            todayViewModel.refresh(context);
 
         new Handler().postDelayed(()-> setLoading(false), 2000);
     }
@@ -41,4 +41,8 @@ public class BottomNavigationViewModel extends BaseObservable{
     }
 
     public TodayViewModel todayViewModel = new TodayViewModel();
+
+    public TotalViewModel totalViewModel = new TotalViewModel();
+
+    public WeekViewModel weekViewModel = new WeekViewModel();
 }

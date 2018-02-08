@@ -42,8 +42,4 @@ public class TodayFragment extends Fragment {
 
         return binding.getRoot();
     }
-
-    public void refresh(){
-        viewModel.refresh();
-    }
 }
